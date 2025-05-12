@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - Currency Converter</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .profile-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .profile-info {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .profile-info p {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #555;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 20px auto;
+      border: 2px solid #ccc;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      font-size: 12px;
+      width: 100%;
+      color: #888;
+    }
+
+    footer a {
+      color: #70B8FF;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <h2 id="welcome-name">Welcome</h2>
+
+    <img id="profile-pic" src="default-profile.png" alt="Profile Picture" class="profile-pic">
+
+    <div class="profile-info">
+      <p><strong>First Name:</strong> <span id="first-name"></span></p>
+      <p><strong>Last Name:</strong> <span id="last-name"></span></p>
+      <p><strong>Email:</strong> <span id="email"></span></p>
+      <p><strong>Country:</strong> <span id="country"></span></p>
+      <p><strong>Preferred Currency:</strong> <span id="currency"></span></p>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Currency Converter. <a href="#">Terms & Conditions</a></p>
+    </footer>
+  </div>
+
+  <script>
+    fetch('user-profile.php')
+      .then(response => response.json())
+      .then(data => {
+        if (data.first_name) {
+          document.getElementById('welcome-name').textContent = `Welcome, ${data.first_name}`;
+          document.getElementById('first-name').textContent = data.first_name;
+          document.getElementById('last-name').textContent = data.last_name;
+          document.getElementById('email').textContent = data.email;
+          document.getElementById('country').textContent = data.country;
+          document.getElementById('currency').textContent = data.currency;
+          document.getElementById('profile-pic').src = data.profile_pic || 'default-profile.png';
+        }
+      })
+      .catch(err => console.error('Failed to fetch user info', err));
+  </script>
+</body>
+</html>
